@@ -15,4 +15,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "FeatureMod"
 include(":app")
- 
+include(":feature:photos")
