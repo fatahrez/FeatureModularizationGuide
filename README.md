@@ -1,4 +1,5 @@
 # Feature Modularization Guide
+
 - This is a project to my guide on how to Feature Modularization in Android. I used to love layer modularization
   but I have to come love Feature Modularization.
 - Feature Modularization is where you choose an architecture which is multi-module 
@@ -6,6 +7,7 @@
 of your app.
 
 ## Why Feature Modularization
+
 - The right architecture in Android Development can help you write clear code that is easy to write,
 maintain, and update easily. It also helps in collaboration keeping in check everyone's
 contributions.
@@ -13,6 +15,7 @@ contributions.
 every feature is clean and organized.
 
 ### Benefits of Feature Modularization
+
 1. Focus on features - Features are the most important thing to users and by choosing feature 
 modularization you are adopting a mindset to give the users your best app. I honestly believe clean code
 reflects on the users side as well.
@@ -28,12 +31,14 @@ a few lines of editing.
 enables features to be downloaded on when needed. This is only possible when you modularize by feature.
 
 ### Difference between feature and layer modularization
+
 - You modularize layer modularization by layer (Domain, Data, presentation) and feature 
 modularization by app features (e.g. authentication, timeline e.t.c).
 - Feature modularization contains layers in every feature module while in layer, layers are 
 different modules.
 
 ## How to implement feature modularization
+
 - Start by creating your project and picking app name like you would normally do in android studio.
 - 
 1![create new android studio project](./screenshots/create_new_project.png)
@@ -49,6 +54,7 @@ click on your root folder and navigate to new > Directory and create feature fol
 
 - Right click on your root folder and navigate to new > module. Create a new module by picking name
 in pop up. Also pick no activity in the second pop up.
+
 ![navigate to create a new module](./screenshots/new_module_nav.png)
 
 ![create new module pop up 1](./screenshots/create_new_module1.png)
@@ -72,6 +78,7 @@ in pop up. Also pick no activity in the second pop up.
 4. Presentation Package
 
 ### 1. Domain Package
+
 - This is used package/layer is used to define the Business logic of the project. 
 - These are elements that don't change and define the larger structure of data and interface.
 - To pick this package correctly you need to understand your field and break what you want your app
@@ -91,6 +98,7 @@ to do to the nitty-gritties.
 ![Domain subdivided packages](./screenshots/domain_breakdown.png)
 
 #### Model
+
 - Contains models that define the structure of your project. This is defined mostly by the API you are
 using or database structure of your local database.
 - More things that define and shape your model package are Client requirements, User needs, direction
@@ -207,6 +215,7 @@ data class PhotoWrapperDomain(
 ```
 
 #### Repository
+
 - This is an interface to connect domain package to other packages. Specifically in this case data 
 and presentation. it acts as bridge between the two
 
@@ -214,6 +223,7 @@ and presentation. it acts as bridge between the two
 
 - Inside the repository we declare what functionalities of the features we want to create. e.g. in
 our getPhotos to get a list of photos.
+
 ```
 interface PhotosRepository {
     suspend fun getPhotos(): Flow<ResultWrapper<List<PhotoWrapperDomain>>>
@@ -226,5 +236,6 @@ work on with in the main thread
 below.
 
 ### 2. Data package
+![data layer sub packages](./screenshots/data_packages.png)
 ### 3. Dependency Injection (DI) package
 ### 4. Presentation Package
