@@ -96,6 +96,7 @@ using or database structure of your local database.
 - More things that define and shape your model package are Client requirements, User needs, direction
 your company/organization is thinking of going to.
 - For this photos module case its defined by API-unsplash that we are using.
+([check it out here](https://unsplash.com/documentation))
 - Unsplash API endpoint for photos looks like this:
 
 ```
@@ -206,6 +207,23 @@ data class PhotoWrapperDomain(
 ```
 
 #### Repository
+- This is an interface to connect domain package to other packages. Specifically in this case data 
+and presentation. it acts as bridge between the two
+
+![repository photos folder](./screenshots/repository_photo.png)
+
+- Inside the repository we declare what functionalities of the features we want to create. e.g. in
+our getPhotos to get a list of photos.
+```
+interface PhotosRepository {
+    suspend fun getPhotos(): Flow<ResultWrapper<List<PhotoWrapperDomain>>>
+}
+```
+
+- we are using flow from coroutine libraries and making it a suspend function to make it easier to
+work on with in the main thread
+- ResultWrapper is created in Common (a shared repository). Implementation of Common module is down
+below.
 
 ### 2. Data package
 ### 3. Dependency Injection (DI) package
