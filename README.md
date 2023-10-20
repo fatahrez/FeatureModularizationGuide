@@ -305,5 +305,9 @@ class PhotosRepositoryImpl(
 ```
 NOTE: safeCallApi() function is in common module explained below
 
+- Final structure for our data layer looks like this.
+
+![data layer structure](./screenshots/data_layer.png)
+
 ### 3. Dependency Injection (DI) package
 ### 4. Presentation Package
