@@ -236,6 +236,74 @@ work on with in the main thread
 below.
 
 ### 2. Data package
-![data layer sub packages](./screenshots/data_packages.png)
+- In this package you work with any type of data for your app. This includes API data, cached, local
+database, firebase or any type of data. 
+- In creating the structure of the data package/layer create a package for all your data sources. e.g.
+in this project we are using remote and local cached data. so we have packages for both.
+- We need another package we need is repository package which connects data from remote data source
+to our local cache DB.
+
+- ![data layer sub packages](./screenshots/data_packages.png)
+
+- To recap. The inner packages are:
+
+1. Remote package - Data from remote source
+2. Local package - Data from Local db source
+3. Repository - Connect data from different data sources
+
+#### Remote package
+
+![remote package structure](./screenshots/remote_package.png)
+
+- This package also contains DTOs(Data Transfer objects). These are basically your models that will
+be used to map data from APIs. The models are repeated the same as the ones in Domain to keep code 
+clean especially with annotations from libraries like retrofit and room not to crank up domain 
+models.
+- however we need to have a function to transform them domain models when needed. Like in the 
+example below.
+```
+data class PhotoWrapperDTO(
+    val id: String,
+    val urls: LinksDTO
+) {
+   fun toPhotoWrapperDomain(): PhotoWrapperDomain {
+       return PhotoWrapperDomain(
+           id = id,
+           urls = urls.toLinksDomain()
+       )
+   }
+}
+```
+- This package also contains API interface which makes call to API using retrofit
+
+```
+interface PhotosAPI {
+
+    @GET("photos")
+    suspend fun getPhotos(): PhotoWrapperDTO
+
+}
+```
+
+- Repository package contains RepositoryImpl file which implements repository from domain package/
+layer
+- It is used to also connect different data sources e.g. remote api and local db.
+- It takes in all data source and dispatcher as dispatchers and implements repository functions
+like in the example below.
+```
+class PhotosRepositoryImpl(
+    private val photosAPI: PhotosAPI,
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
+): PhotosRepository {
+    override suspend fun getPhotos(): Flow<ResultWrapper<List<PhotoWrapperDomain>>> =
+        safeApiCall(ioDispatcher){
+        photosAPI.getPhotos().map {
+            it.toPhotoWrapperDomain()
+        }
+    }
+}
+```
+NOTE: safeCallApi() function is in common module explained below
+
 ### 3. Dependency Injection (DI) package
 ### 4. Presentation Package

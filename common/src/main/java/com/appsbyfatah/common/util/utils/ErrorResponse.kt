@@ -1,4 +1,4 @@
-package com.appsbyfatah.common.util
+package com.appsbyfatah.common.util.utils
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName

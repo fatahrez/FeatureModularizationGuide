@@ -1,6 +1,6 @@
 package com.appsbyfatah.photos.domain.repository
 
-import com.appsbyfatah.common.util.ResultWrapper
+import com.appsbyfatah.common.util.utils.ResultWrapper
 import com.appsbyfatah.photos.domain.model.PhotoWrapperDomain
 import kotlinx.coroutines.flow.Flow
 
